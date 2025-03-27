@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'shop/layouts/main.html' %} 
 {% block title %} 
 Collections | ShopKart
@@ -157,3 +158,164 @@ Collections | ShopKart
 </section>
 
 {% endblock content %}
+=======
+{% extends 'shop/layouts/main.html' %} 
+{% block title %} 
+Collections | ShopKart
+{% endblock title %} 
+{% block content %}
+
+{% load static %} 
+
+<style>
+  /* Video Background Styling */
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* Hero Content */
+  .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 1;
+  }
+
+  .hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-custom {
+    background: linear-gradient(45deg, #ff6b6b, #556270);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 25px;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+  }
+
+  .btn-custom:hover {
+    background: linear-gradient(45deg, #556270, #ff6b6b);
+  }
+  /* Category Card Styling */
+.card {
+  border: none;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+/* Hover Effect: Zoom-in with Shadow */
+.card:hover {
+  transform: scale(1.05); /* Slight Zoom */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Category Image */
+.card img {
+  transition: transform 0.3s ease-in-out;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Image Zoom-in Effect */
+.card:hover img {
+  transform: scale(1.1);
+}
+
+/* Card Body Styling */
+.card-body {
+  text-align: center;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Hover Effect: Change Background Color */
+.card:hover .card-body {
+  background: linear-gradient(45deg, #ff6b6b, #556270);
+  color: white;
+  border-radius: 0 0 10px 10px;
+}
+
+/* Title Styling */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Change Text Color on Hover */
+.card:hover .card-title {
+  color: #ffd700; /* Gold Color */
+}
+
+</style>
+
+<!-- Video Background Section -->
+<section class="video-container">
+  <video autoplay muted loop playsinline>
+    <source src="{% static 'images/video01.mp4' %}" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <h1>Welcome to ShopKart Collections</h1>
+    <p>Discover our best-selling products and trending categories</p>
+    <a href="#" class="btn btn-custom">Explore Now</a>
+  </div>
+</section>
+
+
+<!-- Categories Section -->
+<section class="bg-light py-4 my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="category-title">Categories</h4>
+        <hr style="border-color:#b8bfc2;">
+        {% include 'shop/inc/message.html' %} 
+      </div>
+
+      {% for item in category %}
+      <div class="col-md-4 col-lg-3">
+        <div class="card my-3">
+          <img src="{{ item.image.url }}" class="card-image-top" alt="Categories">
+          <a href="{% url 'collections' item.name %}" style="text-decoration: none;">
+            <div class="card-body">
+              <h5 class="card-title text-primary">{{ item.name }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+>>>>>>> e7df23b (second commit)
