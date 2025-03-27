@@ -1,0 +1,164 @@
+{% extends 'shop/layouts/main.html' %} 
+{% block title %} 
+Shopping Cart | ShopKart
+{% endblock title %} 
+
+{% block content %}
+{% load static %} 
+
+<style>
+  /* Cart Container */
+  .cart-container {
+    background: #f8f9fa;
+    padding: 50px 0;
+  }
+
+  /* Table Styling */
+  .table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .table th {
+    background: linear-gradient(45deg, #ff6b6b, #556270);
+    color: white;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .table img {
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .table img:hover {
+    transform: scale(1.1);
+  }
+
+  /* Buttons */
+  .btn-danger {
+    background: #dc3545;
+    border: none;
+    transition: 0.3s;
+  }
+
+  .btn-danger:hover {
+    background: #a71d2a;
+  }
+
+  .btn-primary {
+    background: linear-gradient(45deg, #007bff, #6610f2);
+    border: none;
+    transition: 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(45deg, #6610f2, #007bff);
+  }
+
+  /* Checkout Section */
+  .checkout-section {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .checkout-btn {
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: 0.3s ease-in-out;
+  }
+
+  .checkout-btn:hover {
+    background: linear-gradient(45deg, #218838, #28a745);
+    color: white;
+    transform: scale(1.05);
+  }
+
+</style>
+
+<!-- Cart Section -->
+<section class="cart-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-4 mt-5">🛒 Your Shopping Cart</h2>
+        <video width="100%" height="auto" controls>
+          <source src="{% static 'images/video2.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+      </video>
+      
+
+        <hr style="border-color:#b8bfc2;">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart %}
+            <tr>
+              <td>
+                <img src="{{ item.product.product_image.url }}" height="75px" alt="{{ item.product.name }}">
+              </td>
+              <td>{{ item.product.name }}</td>
+              <td>₹{{ item.product.selling_price | stringformat:'d' }}</td>
+              <td>
+                <input type="number" class="form-control qty-input" value="{{ item.product_qty }}" min="1">
+              </td>
+              <td>₹{{ item.total_cost | stringformat:'d' }}</td>
+              <td>
+                <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure you want to remove this item?')"
+                   class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Remove</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Total Amount & Checkout -->
+    {% comment %} <div class="row">
+      <div class="col-md-6 offset-md-6 checkout-section">
+        <h4><b>Total Amount: ₹<span id="net">0</span></b></h4>
+        <a href="{% url 'index.html' %}" class="checkout-btn">Proceed to Checkout</a>
+      </div>
+    </div> {% endcomment %}
+
+  </div>
+</section>
+
+<!-- Script for Total Calculation -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let totalAmount = 0;
+    document.querySelectorAll(".table tbody tr").forEach((row) => {
+      let amount = parseInt(row.children[4].innerText.replace('₹', ''));
+      totalAmount += amount;
+    });
+    document.getElementById("net").innerText = totalAmount;
+  });
+</script>
+
+{% endblock content %}
